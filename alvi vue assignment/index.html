@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equic="X-UA-Compatible" content="ie-edge" />
+        <title>Alvi Vue Assignment</title>    
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    </head>
+
+    <body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <div id="app">
+        <div class="container">
+            <div class="card mt-5">
+                <h2 class="card-header">Mars Rover Info</h2>
+
+                <table class="table">
+                    <thead class="thead-light">        
+                        <th>Number</th>            
+                        <th>Camera Name</th>
+                        <th>Rover Name</th>
+                        <th>Rover ID</th>
+                        <th>Status</th> 
+                        <th>Photo</th>             
+                    </thead>
+                    <tbody v-cloak>
+                        <tr v-for="(photo, index) in photos">
+                            <td>{{index + 1}}</td>
+                            <td>{{photo.camera.full_name}}</td>
+                            <td>{{photo.rover.name}}</td>
+                            <td>{{photo.id}}</td>
+                            <td>{{photo.rover.status}}</td>
+                            <td>
+                                <img :src = "photo.img_src" width="300" height="300">
+                            </td>
+                            </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+
+
+    <script>
+            var app = new Vue({
+            el: '#app',
+            data: {
+                photos: [],
+                apiUrl: "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=DEMO_KEY"
+            },
+            created: 
+                async function() {
+                    const response = await fetch(this.apiUrl);
+                const data = await response.json();
+                this.photos = data.photos;
+                },
+            
+        });
+    </script>
+</body>
+</html>
